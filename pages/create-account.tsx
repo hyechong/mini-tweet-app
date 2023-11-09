@@ -1,31 +1,43 @@
-import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-// import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useMutation from '../lib/useMutation';
 
-interface CreateForm {
+interface IForm {
   name: string;
   email: string;
 }
 
-const CreateAccount: NextPage = () => {
-  const [create, { loading, data, error }] = useMutation(
-    '/api/users/createAccount'
-  );
-  // const [submitting, setSubmitting] = useState(false);
+export default () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateForm>();
+  } = useForm<IForm>();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const onValid = (validForm: CreateForm) => {
-    if (loading) return;
-    create(validForm);
-  };
-  console.log(loading, data, error);
+  const onValid = async (data: IForm) => {
+    if (!loading) {
+      setLoading(true);
+      const request = await fetch('/api/users/createAccount', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (request.status === 200) {
+        alert('이미 존재하는 계정입니다. 로그인해주세요');
+      }
+      if (request.status === 201) {
+        alert('계정이 생성되었습니다. 로그인해주세요');
+      }
+      if (request.status !== 405) {
+        router.push('/log-in');
+      }
 
+      setLoading(false);
+    }
+  };
   return (
     <div>
       <h1>Create Account</h1>
@@ -34,7 +46,7 @@ const CreateAccount: NextPage = () => {
           <label htmlFor='name'>Name: </label>
           <input
             type='text'
-            {...register('name', { required: 'Write your name please.' })}
+            {...register('name', { required: '이름을 입력하세요' })}
           />
           <span>{errors?.name?.message}</span>
         </div>
@@ -42,7 +54,7 @@ const CreateAccount: NextPage = () => {
           <label htmlFor='email'>Email: </label>
           <input
             type='email'
-            {...register('email', { required: 'Write your email please.' })}
+            {...register('email', { required: '이메일을 입력하세요' })}
           />
           <span>{errors?.email?.message}</span>
         </div>
@@ -51,5 +63,3 @@ const CreateAccount: NextPage = () => {
     </div>
   );
 };
-
-export default CreateAccount;

@@ -16,5 +16,27 @@ model User {
   email           String    @unique
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  tweet           Tweet[]
+  like            Like[]
 }
 
+model Tweet {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  message   String?
+  like     Like[]
+
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  tweet    Tweet   @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+  tweetId  Int
+}

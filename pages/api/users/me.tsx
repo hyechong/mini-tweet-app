@@ -6,12 +6,21 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  console.log(req.session.user);
-  const profile = await db.user.findUnique({
-    where: { id: req.session.user?.id },
+  const {
+    session: { user },
+  } = req;
+  if (!user?.id) {
+    return res.status(401).end();
+  }
+  const dbUser = await db.user.findUnique({
+    where: {
+      id: user.id,
+    },
   });
-  console.log(profile);
-  res.status(200).end();
+  if (!dbUser) {
+    return res.status(404).end();
+  }
+  return res.send({ ...dbUser });
 }
 
 export default withApiSession(handler);
