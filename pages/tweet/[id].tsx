@@ -3,7 +3,6 @@ import { Tweet, User } from '@prisma/client';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import useMutation from '../../lib/useMutation';
-import { cls } from '../../lib/utils';
 
 interface TweetWithUser extends Tweet {
   user: User;

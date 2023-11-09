@@ -19,6 +19,9 @@ const Upload: NextPage = () => {
   const [uploadTweet, { loading, data }] =
     useMutation<UploadProductMutaion>('/api/tweet');
   const router = useRouter();
+  const goBackHandler = () => {
+    router.push('/');
+  };
 
   const onValid = async (data: UploadProductForm) => {
     if (loading) return;
@@ -34,8 +37,23 @@ const Upload: NextPage = () => {
   return (
     <div className='flex h-auto w-full items-center justify-center p-12'>
       <form
-        className='bg-pink-100 p-4 w-full max-w-sm rounded-3xl border-2 border-b-4 border-r-4 border-black'
+        className='bg-pink-100 p-4 w-full max-w-sm rounded-3xl border-2 border-b-4 border-r-4 border-black space-y-3'
         onSubmit={handleSubmit(onValid)}>
+        <button onClick={goBackHandler}>
+          <svg
+            className='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='1.5'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'>
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3'></path>
+          </svg>
+        </button>
         <textarea
           {...register('message', { required: true })}
           name='message'
