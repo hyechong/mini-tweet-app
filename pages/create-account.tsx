@@ -39,27 +39,35 @@ export default () => {
     }
   };
   return (
-    <div>
-      <h1>Create Account</h1>
-      <form onSubmit={handleSubmit(onValid)}>
-        <div>
-          <label htmlFor='name'>Name: </label>
-          <input
-            type='text'
-            {...register('name', { required: '이름을 입력하세요' })}
-          />
-          <span>{errors?.name?.message}</span>
-        </div>
-        <div>
-          <label htmlFor='email'>Email: </label>
-          <input
-            type='email'
-            {...register('email', { required: '이메일을 입력하세요' })}
-          />
-          <span>{errors?.email?.message}</span>
-        </div>
-        <button>Create Account</button>
-      </form>
+    <div className='flex h-auto w-full items-center justify-center p-12'>
+      <div className='bg-pink-100 p-4 w-full max-w-sm rounded-3xl border-2 border-b-4 border-r-4 border-black space-y-3'>
+        <h1 className='text-xl font-extrabold flex justify-center items-center'>
+          Create Account
+        </h1>
+        <form className='font-bold space-y-3' onSubmit={handleSubmit(onValid)}>
+          <div>
+            <label htmlFor='name'>Name: </label>
+            <input
+              className='bg-inherit'
+              type='text'
+              {...register('name', { required: '이름을 입력하세요' })}
+            />
+            <span>{errors?.name?.message}</span>
+          </div>
+          <div>
+            <label htmlFor='email'>Email: </label>
+            <input
+              className='bg-inherit'
+              type='email'
+              {...register('email', { required: '이메일을 입력하세요' })}
+            />
+            <span>{errors?.email?.message}</span>
+          </div>
+          <button className='bg-yellow-400 px-5 py-2 flex justify-center items-center w-full rounded-lg border-2 border-b-4 border-r-4 border-black font-bold'>
+            Create Account
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         user: true,
         _count: {
           select: {
-            like: true,
+            likes: true,
           },
         },
       },

@@ -32,18 +32,22 @@ const Upload: NextPage = () => {
   }, [data, router]);
 
   return (
-    <form className='p-4 space-y-4' onSubmit={handleSubmit(onValid)}>
-      <textarea
-        {...register('message', { required: true })}
-        name='message'
-        className='border-2 border-[#FC5200] w-full resize-none min-h-[100px] placeholder:pt-1 pl-2'
-        placeholder='Write Your Text'
-        required
-      />
-      <button className='w-full  h-9 bg-[#FC5200] hover:bg-orange-600 text-white  px-4 border border-transparent rounded-md shadow-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none'>
-        {loading ? 'Loading' : 'Upload Tweet'}
-      </button>
-    </form>
+    <div className='flex h-auto w-full items-center justify-center p-12'>
+      <form
+        className='bg-pink-100 p-4 w-full max-w-sm rounded-3xl border-2 border-b-4 border-r-4 border-black'
+        onSubmit={handleSubmit(onValid)}>
+        <textarea
+          {...register('message', { required: true })}
+          name='message'
+          className='border-2 border-black rounded-lg w-full resize-none min-h-[200px] p-3'
+          placeholder='내용을 입력하세요.'
+          required
+        />
+        <button className='bg-yellow-400 px-5 py-2 flex justify-center items-center w-full rounded-lg border-2 border-b-4 border-r-4 border-black font-bold'>
+          {loading ? 'Loading' : 'Upload Tweet'}
+        </button>
+      </form>
+    </div>
   );
 };
 
